@@ -16,12 +16,27 @@ namespace MS_Lab1_WinF
 
         private void button1_Click(object sender, EventArgs e)
         {
-            fillChart();
+            fillChartNeyman();
+
+            MonteCarlo_FillChart();
         }
 
-        private void fillChart()
+        private void fillChartNeyman()
         {
             var myChart = new ChartForNeyman(chart1);
+
+            int n = Convert.ToInt32(textBox1.Text);
+
+            int a = Convert.ToInt32(textBox5.Text);
+            int b = Convert.ToInt32(textBox6.Text);
+            int c = Convert.ToInt32(textBox7.Text);
+
+            myChart.Calculate(a, b, c, n);
+        }
+
+        private void MonteCarlo_FillChart()
+        {
+            var myChart = new MonteCarloMethod(chart2);
 
             int n = Convert.ToInt32(textBox1.Text);
             int m = Convert.ToInt32(textBox2.Text);
@@ -31,7 +46,9 @@ namespace MS_Lab1_WinF
             int b = Convert.ToInt32(textBox6.Text);
             int c = Convert.ToInt32(textBox7.Text);
 
-            myChart.Calculate(a, b, c, n, m);
+            myChart.CalculateTheory(a, b, c, n, m, alpha, beta);
+
+            myChart.CalculateExperiment(a, b, c, n, m, alpha, beta);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -65,6 +82,11 @@ namespace MS_Lab1_WinF
         }
 
         private void textBox7_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chart2_Click(object sender, EventArgs e)
         {
 
         }

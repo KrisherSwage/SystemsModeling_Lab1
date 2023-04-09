@@ -26,7 +26,7 @@ namespace MS_Lab1_WinF
             Clear();
             AddArea();
             AddSeries();
-            Chart.Titles.Add("Распределение по функции");
+            Chart.Titles.Add("Метод фон Неймана");
 
         }
 
@@ -45,8 +45,6 @@ namespace MS_Lab1_WinF
             Chart.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Number; //это для нормального отображения значений на x
             Chart.ChartAreas[0].AxisX.IntervalOffsetType = DateTimeIntervalType.Number;
 
-
-
             Chart.ChartAreas[0].AxisY.IsLabelAutoFit = true;
             Chart.ChartAreas[0].AxisY.IntervalType = DateTimeIntervalType.Number; //это для нормального отображения значений на y
             Chart.ChartAreas[0].AxisY.IntervalOffsetType = DateTimeIntervalType.Number;
@@ -55,7 +53,7 @@ namespace MS_Lab1_WinF
         private void AddSeries() //
         {
             Series series = new Series();
-            series.Name = "ТочкиПодФункцией";
+            series.Name = "Метод_фон_Неймана";
             series.ChartArea = Chart.ChartAreas[0].Name;
             series.ChartType = SeriesChartType.Column;
             series.BorderWidth = 3; //граница вокруг столбцов
@@ -72,13 +70,12 @@ namespace MS_Lab1_WinF
 
         static Random rnd = new Random();
 
-        public void Calculate(int a, int b, int c, int n, int m)
+        public void Calculate(int a, int b, int c, int n)
         {
             double square = 1.0; //площадь под функцией равна единице
             //double H = (2.0 * square) / ((c - a) + 2.0 * (b - c)); //рассчитываем H, с условием размера площади
             double H = 2.0 / (2 * b - a - c); //рассчитываем H, с условием размера площади (2/49)
-
-            double halfH = (H / 2.0); //по заданию (1/49)
+            double halfH = (H / 2.0); //по заданию (варианту) (1/49)
 
             double[,] coordinates = new double[n, 2]; //массив для генерации чисел со случайными координатами
 
@@ -116,7 +113,7 @@ namespace MS_Lab1_WinF
             }
 
             int averageAmount = n / (b - a);
-            for (int i = a; i < b; i++)
+            for (int i = a; i < b; i++) //изменение высоты столбцов (чтобы соответствовало площади S)
             {
                 quantity[i] /= averageAmount / H;
             }
@@ -138,7 +135,7 @@ namespace MS_Lab1_WinF
             Chart.Series["Line"].Points.Add(new DataPoint(c, halfH)); //точка 2
             Chart.Series["Line"].Points.Add(new DataPoint(c, H)); //точка 3
             Chart.Series["Line"].Points.Add(new DataPoint(b, H)); //точка 4
-            Chart.Series["Line"].ChartType = SeriesChartType.Line; //черчение линии
+            Chart.Series["Line"].ChartType = SeriesChartType.Line; //черчение линии по точкам
 
         }
 
